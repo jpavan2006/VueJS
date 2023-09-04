@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 Basics</title>
+    <style>
+        .box {
+            background-color: purple;
+            height: 200px;
+            width: 200px;
+        }   
+        .two {
+                background-color: red;
+                height: 200px;
+                width: 200px;
+        }
+        .three {
+                background-color: blue;
+                height: 200px;
+            width: 200px;
+        }
+        [v-cloak]{
+            display: none 
+
+        }
+        input {
+            margin: 10px;
+            display: block
+        }
+     </style>
+</head>
+<body>
+      <div id ="app" v-cloak>
+          <login-form />
+          <hr />
+          <button @click="isVisible=!isVisible">ToggleBox</button>
+           </div>
+     </div> 
+
+     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+       
+       <script>
+         let app =Vue.createApp({
+           data: function(){
+                 return {
+                   greeting: 'Hello Vue 3!',
+                   isVisible: false,
+                   isVisible2: true
+                 }
+           }
+         })
+ 
+         app.component('login-form',{
+            template: `
+                 <form @submit.prevent="handleSubmit">
+                    <h1> {{ title }} </h1>
+                    <!--
+
+                        //key needed  when we program more structured app.
+                    //we hve vbind key to str. also )st:key="i"
+                    //<p v-for="(str,i) in inputs" :key="i"> {{ i }} </p>
+                    //we hve vbind key to str. also )st:key="i"
+                    
+                    
+                   
+                     <custom-input type="email" v-model="email" v-bind:label="emailLabel" />
+                     <custom-input type="password" v-model="password" :label="passwordLabel" />
+                    -->
+                    
+
+                    <custom-input 
+                       v-for="(input, i) in inputs"
+                       :key="i"
+                       v-model="input.value"
+                       :label="input.label"
+                       :type="input.type"
+                    />
+                    <button>Log in</button>
+                  </form>
+                `,
+            components: ['custom-input'],
+            data() {
+                return {
+                    title: 'Login Form',
+                    inputs: [
+                        {
+
+                            label: 'Email' ,
+                            value: '',
+                            type: 'email'
+                        },
+                        {
+                            label: 'Password',
+                            value: '',
+                            type: 'password'
+
+                        }
+                      
+                    ],
+                    email: 'kk',
+                    password: 'kkk',
+                    emailLabel: 'Email',
+                    passwordLabel: 'Password'
+                }
+              },
+              methods: {
+                handleSubmit(){
+                    console.log('submitted')
+                    console.log(this.inputs[0].value , this.inputs[1].value)
+                    
+                }
+              }
+            
+         })
+         
+         app.component('custom-input', {
+            template: `
+                <label>
+                   {{ label }}       
+                   <input type="type" v-model="inputValue" /> 
+                   
+                </label>
+               
+            `,
+            props: ['label', 'type','modelValue'],  // props are values coming from parent to child
+            computed: {
+               inputValue: {
+                get(){
+                     return this.modelValue
+                },
+                set(value){
+
+                    console.log(value)
+                    this.$emit('update:modelValue' , value)
+                    //first param is type of event iam emitting and second is the value u r setting.
+                    //lets u emit events that other components can listen to.
+                    //v-model frm parent is listening to child component update.
+
+                    //the props which we pass to child cant be changed in child.
+                }
+               }
+            }
+         }
+         
+         )
+
+         app.mount('#app')
+       </script>
+   </body>
+
+</html>
