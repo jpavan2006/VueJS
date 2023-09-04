@@ -1,5 +1,7 @@
 # VueJS
 
+--------------
+
 index1.html observations :
 
 1. Connect javascript and html dom elements
@@ -14,3 +16,14 @@ index1.html observations :
 Observations on output image and tests :
 1. abc entered in text box is automatically populated to string.
 2.Toggle box works based on directives logic defined.
+
+------------
+index2.html observations :
+
+1. v-cloak directive introduced to control display on component to address glit or latency.
+2. multiple divs in html
+3. created a custom parent component with name - login-form
+4. controlling the default submit behaviour through @submit.prevent which is the v-on directive.
+5. Can also observe the difference between default component and custom component.
+6. template and form  ; data() ; methods 
+7. handleSubmit method - how we got the email and password and displayed in console.

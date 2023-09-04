@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 Basics</title>
+    <style>
+        .box {
+            background-color: purple;
+            height: 200px;
+            width: 200px;
+        }   
+        .two {
+                background-color: red;
+                height: 200px;
+                width: 200px;
+        }
+        .three {
+                background-color: blue;
+                height: 200px;
+            width: 200px;
+        }
+        [v-cloak]{
+            display: none 
+
+        }
+     </style>
+</head>
+<body>
+      <div id ="app" v-cloak>
+         <div>
+          <hr />
+          <button @click="isVisible=!isVisible">ToggleBox</button>
+           </div>
+           
+           <div>
+            <login-form />
+
+           </div>
+     </div> 
+
+     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+       
+       <script>
+         let app =Vue.createApp({
+           data: function(){
+                 return {
+                   greeting: 'Hello Vue 3!',
+                   isVisible: false,
+                   isVisible2: true
+                 }
+           }
+         })
+ 
+         app.component('login-form',{
+            template: `
+                 <form @submit.prevent="handleSubmit">
+                    <h1> {{ title }} </h1>
+                     <input type="email" v-model="email" />
+                     <input type="password" v-model="password" />
+                     <button> Log in </button>
+                  </form>
+                `,
+            data() {
+                return {
+                    title: 'Login Form',
+                    email: '',
+                    password: ''
+                }
+              },
+              methods: {
+                handleSubmit(){
+                    console.log('submitted')
+                    console.log(this.email,this.password)
+                    
+                }
+              }
+            
+         })
+         app.mount('#app')
+       </script>
+   </body>
+
+</html>
